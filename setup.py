@@ -12,5 +12,6 @@ setup(
     zip_safe=False,
     install_requires=[
         'Django>=1.9',
+        'requests>=2'
     ]
 )
