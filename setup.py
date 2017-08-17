@@ -6,7 +6,7 @@ setup(
     description='Django password validator based on haveibeenpwned.com API',
     url='https://github.com/tombiasz/django-hibpwned',
     author='tombiasz',
-    author_email='',
+    author_email='tomasz.m.nowacki@gmail.com',
     license='MIT',
     packages=['haveibeenpwned'],
     zip_safe=False,
