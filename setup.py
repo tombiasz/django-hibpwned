@@ -13,5 +13,12 @@ setup(
     install_requires=[
         'Django>=1.9',
         'requests>=2'
+    ],
+    classifiers=[
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Framework :: Django',
+        'Programming Language :: Python :: 3 :: Only',
     ]
 )
