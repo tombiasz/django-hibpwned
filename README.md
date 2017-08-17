@@ -9,9 +9,15 @@ Django 1.9+
 requests 2+
 ```
 
-## Usage:
+## Install
 
-Add to settings.py: 
+```
+pip install django-hibpwned
+```
+
+## Usage
+
+Add to settings.py:
 
 ```
 AUTH_PASSWORD_VALIDATORS = [
