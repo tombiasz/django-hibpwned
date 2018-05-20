@@ -13,22 +13,22 @@ class HaveIBeenPwnedValidatorTest(TestCase):
         self.assertTrue(mock_sha1.called)
 
     @patch('haveibeenpwned.validators.HaveIBeenPwnedValidator._get_hash')
-    @patch('requests.post')
-    def test_validate_not_raise_on_proper_password(self, mock_post, mock_get_hash):
+    @patch('requests.get')
+    def test_validate_not_raise_on_proper_password(self, mock_get, mock_get_hash):
         mock_get_hash.return_value = 'testhash'
         mock_response = Mock()
         mock_response.status_code = 400
-        mock_post.return_value = mock_response
+        mock_get.return_value = mock_response
 
         self.assertIsNone(HaveIBeenPwnedValidator().validate('test'))
 
     @patch('haveibeenpwned.validators.HaveIBeenPwnedValidator._get_hash')
-    @patch('requests.post')
-    def test_validate_raise_on_proper_password(self, mock_post, mock_get_hash):
+    @patch('requests.get')
+    def test_validate_raise_on_proper_password(self, mock_get, mock_get_hash):
         mock_get_hash.return_value = 'testhash'
         mock_response = Mock()
         mock_response.status_code = 200
-        mock_post.return_value = mock_response
+        mock_get.return_value = mock_response
         expected_error = "This password has previously appeared in a data breach. Please choose more secure alternative."
 
         with self.assertRaises(ValidationError) as e:
@@ -37,19 +37,16 @@ class HaveIBeenPwnedValidatorTest(TestCase):
         self.assertEqual(e.exception.error_list[0].code, 'password_pwned')
 
     @patch('haveibeenpwned.validators.HaveIBeenPwnedValidator._get_hash')
-    @patch('requests.post')
-    def test_validate_api_called_with_proper_params(self, mock_post, mock_get_hash):
+    @patch('requests.get')
+    def test_validate_api_called_with_proper_params(self, mock_get, mock_get_hash):
         mock_get_hash.return_value = 'testhash'
         mock_response = Mock()
         mock_response.status_code = 400
         HaveIBeenPwnedValidator().validate('test') # should not raise
 
-        self.assertTrue(mock_post.called)
-        self.assertIsNone(mock_post.assert_called_with(
-            HaveIBeenPwnedValidator.HIBPWNED_API_URL,
-            data = {
-                'Password': mock_get_hash.return_value
-            },
+        self.assertTrue(mock_get.called)
+        self.assertIsNone(mock_get.assert_called_with(
+            f'{HaveIBeenPwnedValidator.HIBPWNED_API_URL}{mock_get_hash.return_value}',
             headers = HaveIBeenPwnedValidator.HIBPWNED_HEADERS
         ))
 
