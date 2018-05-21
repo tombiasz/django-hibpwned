@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-hibpwned',
-    version='0.1',
+    version='0.2',
     description='Django password validator based on haveibeenpwned.com API',
     url='https://github.com/tombiasz/django-hibpwned',
     download_url='https://github.com/tombiasz/django-hibpwned/archive/v0.1.zip',
